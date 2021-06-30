@@ -44,11 +44,16 @@ public class HomeController {
         return "home";
     }
 
-    @PostMapping("/home/new-note")
+    @PostMapping("/home/notes/new-note")
     public String newNote(Note note, Model model,Authentication authentication){
         Integer userId = userService.getUser(authentication.getName()).getUserId();
         note.setUserid(userId);
         noteService.createNote(note);
+        return "redirect:/home";
+    }
+    @PostMapping("/home/notes/delete/{noteid}")
+    public String deleteNote(Note note){
+        noteService.deleteNote(note.getNoteid());
         return "redirect:/home";
     }
 
